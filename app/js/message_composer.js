@@ -820,6 +820,18 @@ MessageComposer.prototype.onKeyEvent = function (e) {
     // console.log(dT(), 'keyup', e.keyCode)
     this.checkAutocomplete()
 
+    // check if page up/down are pressed, scroll chat
+    // history based on that
+    if(e.keyCode == 33 || e.keyCode == 34) {
+      // console.log("scrolling message history");
+      var hist = $(".im_history_scrollable_wrap");
+      var dir = e.keyCode == 34 ? 1 : -1;
+      dir = dir * Math.min(Math.max(100, window.screen.availHeight - 350), 800);
+      hist.animate({
+        scrollTop: hist.scrollTop() + dir
+      }, 100);
+    }
+
     var length = false
     if (this.richTextareaEl) {
       clearTimeout(this.updateValueTO)
